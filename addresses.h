@@ -1,0 +1,2 @@
+#define PAGE_TO_CORRUPT 0x3bb93bULL
+#define OFFSET 0x12a0ULL
