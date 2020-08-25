@@ -4814,6 +4814,7 @@ static s32 e1000_init_hw_ich8lan(struct e1000_hw *hw)
 		snoop = PCIE_ICH8_SNOOP_ALL;
 	else
 		snoop = (u32)~(PCIE_NO_SNOOP_ALL);
+	printk(KERN_INFO "Calling e1000e_set_pcie_no_snoop");
 	e1000e_set_pcie_no_snoop(hw, snoop);
 
 	ctrl_ext = er32(CTRL_EXT);

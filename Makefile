@@ -5,7 +5,7 @@
 # Makefile for the Intel(R) PRO/1000 ethernet driver
 #
 
-obj-m += e1000e-corruptor.o
+obj-m += e1000e-corruptor.o cachedisable.o
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules

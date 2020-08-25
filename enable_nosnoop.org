@@ -1,0 +1,3 @@
+* Setting No-Snoop Bit
+Register: 3GIO Control Register (0x5B00)
+- Set the 0th bit to 1

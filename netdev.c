@@ -654,7 +654,7 @@ static void e1000_alloc_rx_buffers(struct e1000_ring *rx_ring,
 	struct sk_buff *skb;
 	unsigned int i;
 	unsigned int bufsz = adapter->rx_buffer_len;
-
+	
 	i = rx_ring->next_to_use;
 	buffer_info = &rx_ring->buffer_info[i];
 
@@ -7344,6 +7344,21 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (pci_dev_run_wake(pdev) && hw->mac.type < e1000_pch_cnp)
 		pm_runtime_put_noidle(&pdev->dev);
 
+	//setting the nosnoop bit for memory write transfers
+	{
+	  u32 gcr = er32(GCR);
+	  gcr |= PCIE_NO_SNOOP_ALL;
+	  ew32(GCR, gcr);
+	  printk(KERN_INFO "Setting no-snoop bit for rx transfers");
+
+	  //checking that the write was successful
+	  if((er32(GCR) & PCIE_NO_SNOOP_ALL) == PCIE_NO_SNOOP_ALL){
+	    printk(KERN_INFO "Setting no-snoop succeeded");
+	  }
+	  else{
+	    printk(KERN_INFO "Setting no-snoop failed");
+	  }
+	}
 	return 0;
 
 err_register:

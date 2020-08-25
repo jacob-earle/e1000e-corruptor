@@ -1674,7 +1674,7 @@ s32 e1000e_led_off_generic(struct e1000_hw *hw)
 void e1000e_set_pcie_no_snoop(struct e1000_hw *hw, u32 no_snoop)
 {
 	u32 gcr;
-
+	printk(KERN_INFO "Called e1000e_set_pcie_no_snoop with permission %x.", no_snoop);
 	if (no_snoop) {
 		gcr = er32(GCR);
 		gcr &= ~(PCIE_NO_SNOOP_ALL);
