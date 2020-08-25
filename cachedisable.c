@@ -15,11 +15,11 @@ NOTE: The functionality of this kernel module should only be used within this pr
 // code inspired by a StackOverflow post at https://stackoverflow.com/questions/3962950/how-to-set-control-register-0-cr0-bits-in-x86-64-using-gcc-assembly-on-linux
 // in order to maintain cache coherency, a WBINVD instruction should be used after moving the new value to the CR0
 void disable_cr0(void){
-    asm volatile("pushl  %eax;\n\t"
-                "mov    %cr0,%eax;\n\t"
-                "orl    $(1 << 30),%eax;\n\t"
-                "mov    %eax,%cr0;\n\t"
-                "popl   %eax;"
+    asm volatile("pushq  %rax;\n\t"
+                "movq    %cr0,%rax;\n\t"
+                "orq    $(1 << 30),%rax;\n\t"
+                "movq    %rax,%cr0;\n\t"
+                "popq   %rax;"
     );
 }
 
@@ -38,11 +38,11 @@ void disable_mtrr(void){
 
 // function that reenables caching by resetting the CD flag on the CR0 register
 void reenable_cr0(void){
-    asm volatile("pushl  %eax\n\t"
-                "mov    %cr0,%eax;\n\t"
-                "andl    $(~(1 << 30)),%eax;\n\t"
-                "mov    %eax,%cr0;\n\t"
-                "popl   %eax"
+    asm volatile("pushq  %rax\n\t"
+                "movq    %cr0,%rax;\n\t"
+                "andq    $(~(1 << 30)),%rax;\n\t"
+                "movq    %rax,%cr0;\n\t"
+                "popq   %rax"
     );
 }
 
